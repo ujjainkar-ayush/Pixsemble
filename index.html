@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixsemble - Advanced Mockup Generator</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+    
+    <!-- Prism.js for syntax highlighting -->
+    <link id="prism-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prism-themes@1.9.0/themes/prism-vsc-dark-plus.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- html2canvas for PNG export -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landingPage" class="landing-page">
+        <div class="landing-hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Pixsemble</h1>
+                <p class="hero-subtitle">Seamlessly assemble visuals into stunning, ready-to-show mockups.</p>
+                <button id="startBtn" class="btn btn-primary btn-large">
+                    <i data-feather="play"></i>
+                    <span>Start Creating</span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="features-section">
+            <div class="features-container">
+                <h2 class="features-title">How to Use Pixsemble</h2>
+                <div class="features-flow">
+                    <!-- Step 1 -->
+                    <div class="feature-step">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">
+                            <i data-feather="layers"></i>
+                        </div>
+                        <h3>Choose Mode</h3>
+                        <p>Select between Code, Web, or Device mockup modes</p>
+                        <div class="step-preview">
+                            <div class="preview-modes">
+                                <div class="preview-mode">
+                                    <i data-feather="code"></i>
+                                    <span>Code</span>
+                                </div>
+                                <div class="preview-mode">
+                                    <i data-feather="globe"></i>
+                                    <span>Web</span>
+                                </div>
+                                <div class="preview-mode">
+                                    <i data-feather="smartphone"></i>
+                                    <span>Device</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i data-feather="arrow-down"></i>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="feature-step">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">
+                            <i data-feather="upload"></i>
+                        </div>
+                        <h3>Add Content</h3>
+                        <p>Upload images, paste code, or enter URLs. The mockup auto-resizes to match your content</p>
+                        <div class="step-preview">
+                            <div class="upload-demo">
+                                <div class="upload-box">
+                                    <i data-feather="upload-cloud"></i>
+                                    <span>Drop files here</span>
+                                </div>
+                                <div class="auto-resize-demo">
+                                    <i data-feather="maximize"></i>
+                                    <span>Auto-resize</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i data-feather="arrow-down"></i>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="feature-step">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">
+                            <i data-feather="sliders"></i>
+                        </div>
+                        <h3>Customize</h3>
+                        <p>Adjust templates, colors, shadows, and effects to create the perfect mockup</p>
+                        <div class="step-preview">
+                            <div class="customization-demo">
+                                <div class="template-options">
+                                    <div class="template-opt minimal"></div>
+                                    <div class="template-opt modern"></div>
+                                    <div class="template-opt glass"></div>
+                                    <div class="template-opt transparent"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flow-arrow">
+                        <i data-feather="arrow-down"></i>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="feature-step">
+                        <div class="step-number">4</div>
+                        <div class="step-icon">
+                            <i data-feather="download"></i>
+                        </div>
+                        <h3>Export</h3>
+                        <p>Download your mockup in PNG, SVG, or PDF format with high quality</p>
+                        <div class="step-preview">
+                            <div class="export-demo">
+                                <div class="export-option">
+                                    <i data-feather="image"></i>
+                                    <span>PNG</span>
+                                </div>
+                                <div class="export-option">
+                                    <i data-feather="layers"></i>
+                                    <span>SVG</span>
+                                </div>
+                                <div class="export-option">
+                                    <i data-feather="file-text"></i>
+                                    <span>PDF</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="zap"></i>
+                        </div>
+                        <h3>Smart Auto-Resize</h3>
+                        <p>Mockups automatically adjust to match your uploaded image dimensions</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="palette"></i>
+                        </div>
+                        <h3>Multiple Templates</h3>
+                        <p>Choose from minimal, modern, glassmorphism, and transparent designs</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="code"></i>
+                        </div>
+                        <h3>Syntax Highlighting</h3>
+                        <p>Support for 40+ programming languages with beautiful themes</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i data-feather="smartphone"></i>
+                        </div>
+                        <h3>Device Frames</h3>
+                        <p>iPhone, Android, iPad frames with multiple color options</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="main-app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="brand" id="backToLanding">
+                    <div class="brand-text">
+                        <h1 class="brand-title">Pixsemble</h1>
+                        <p class="brand-subtitle">Advanced Mockup Generator</p>
+                    </div>
+                </div>
+                
+                <div class="header-actions">
+                    <button id="collapseToolbar" class="btn btn-ghost">
+                        <i data-feather="sidebar"></i>
+                        <span>Collapse</span>
+                    </button>
+                    
+                    <button id="themeToggle" class="btn btn-ghost">
+                        <i data-feather="sun"></i>
+                        <span>Light</span>
+                    </button>
+                    
+                    <div class="export-group">
+                        <button id="exportPNG" class="btn btn-primary">
+                            <i data-feather="download"></i>
+                            <span>PNG</span>
+                        </button>
+                        <button id="exportSVG" class="btn btn-secondary">
+                            <i data-feather="layers"></i>
+                            <span>SVG</span>
+                        </button>
+                        <button id="exportPDF" class="btn btn-secondary">
+                            <i data-feather="file-text"></i>
+                            <span>PDF</span>
+                        </button>
+                    </div>
+                    
+                    <a href="https://github.com" target="_blank" class="github-link" aria-label="GitHub">
+                        <i data-feather="github"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner"></div>
+                <p>Processing...</p>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div id="toastContainer" class="toast-container"></div>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <!-- Mode Selection -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i data-feather="layers"></i>
+                        </div>
+                        <h3 class="panel-title">Mode</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="mode-selector">
+                            <button class="mode-btn active" data-mode="code">
+                                <i data-feather="code"></i>
+                                <span>Code</span>
+                            </button>
+                            <button class="mode-btn" data-mode="web">
+                                <i data-feather="globe"></i>
+                                <span>Web</span>
+                            </button>
+                            <button class="mode-btn" data-mode="device">
+                                <i data-feather="smartphone"></i>
+                                <span>Device</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Templates -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i data-feather="grid"></i>
+                        </div>
+                        <h3 class="panel-title">Templates</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="template-grid">
+                            <button class="template-btn active" data-template="minimal">
+                                <div class="template-preview template-minimal"></div>
+                                <span>Minimal</span>
+                            </button>
+                            <button class="template-btn" data-template="modern">
+                                <div class="template-preview template-modern"></div>
+                                <span>Modern</span>
+                            </button>
+                            <button class="template-btn" data-template="glassmorphism">
+                                <div class="template-preview template-glass"></div>
+                                <span>Glass</span>
+                            </button>
+                            <button class="template-btn" data-template="transparent">
+                                <div class="template-preview template-transparent"></div>
+                                <span>Transparent</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mockup Settings -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i data-feather="settings"></i>
+                        </div>
+                        <h3 class="panel-title">Mockup Settings</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <i data-feather="maximize"></i>
+                                <span>Width</span>
+                            </label>
+                            <div class="slider-container">
+                                <input id="mockupWidth" type="range" min="300" max="1200" value="800" class="slider">
+                                <span id="widthValue" class="slider-value">800px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <i data-feather="square"></i>
+                                <span>Padding</span>
+                            </label>
+                            <div class="slider-container">
+                                <input id="mockupPadding" type="range" min="0" max="80" value="32" class="slider">
+                                <span id="paddingValue" class="slider-value">32px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <i data-feather="corner-down-right"></i>
+                                <span>Border Radius</span>
+                            </label>
+                            <div class="slider-container">
+                                <input id="borderRadius" type="range" min="0" max="30" value="12" class="slider">
+                                <span id="radiusValue" class="slider-value">12px</span>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <label class="setting-label">
+                                <i data-feather="droplet"></i>
+                                <span>Shadow</span>
+                            </label>
+                            <div class="slider-container">
+                                <input id="shadowIntensity" type="range" min="0" max="100" value="60" class="slider">
+                                <span id="shadowValue" class="slider-value">60%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Background Settings -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i data-feather="image"></i>
+                        </div>
+                        <h3 class="panel-title">Background</h3>
+                    </div>
+                    <div class="panel-content">
+                        <div class="bg-type-selector">
+                            <button class="bg-type-btn active" data-bg="transparent">
+                                <i data-feather="eye-off"></i>
+                                <span>Transparent</span>
+                            </button>
+                            <button class="bg-type-btn" data-bg="solid">
+                                <i data-feather="circle"></i>
+                                <span>Solid</span>
+                            </button>
+                            <button class="bg-type-btn" data-bg="gradient">
+                                <i data-feather="sunrise"></i>
+                                <span>Gradient</span>
+                            </button>
+                            <button class="bg-type-btn" data-bg="pattern">
+                                <i data-feather="grid"></i>
+                                <span>Pattern</span>
+                            </button>
+                        </div>
+                        
+                        <div id="bgControls" class="bg-controls">
+                            <div class="color-group">
+                                <input type="color" id="bgColor" value="#6366f1" class="color-input">
+                                <input type="color" id="bgColor2" value="#8b5cf6" class="color-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Input -->
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-icon">
+                            <i data-feather="edit-3"></i>
+                        </div>
+                        <h3 class="panel-title">Content</h3>
+                    </div>
+                    <div class="panel-content">
+                        <!-- Code Content -->
+                        <div id="codeInputs" class="content-inputs">
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="type"></i>
+                                    <span>Title</span>
+                                </label>
+                                <input id="codeTitle" type="text" placeholder="main.js" value="main.js" class="text-input">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="code"></i>
+                                    <span>Language</span>
+                                </label>
+                                <select id="codeLanguage" class="select-input">
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="typescript">TypeScript</option>
+                                    <option value="python">Python</option>
+                                    <option value="java">Java</option>
+                                    <option value="csharp">C#</option>
+                                    <option value="cpp">C++</option>
+                                    <option value="html">HTML</option>
+                                    <option value="css">CSS</option>
+                                    <option value="json">JSON</option>
+                                    <option value="markdown">Markdown</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="file-text"></i>
+                                    <span>Code</span>
+                                </label>
+                                <textarea id="codeContent" class="textarea-input" placeholder="Enter your code here...">// Welcome to Pixsemble
+function generateMockup() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Create beautiful mockups
+    ctx.fillStyle = '#6366f1';
+    ctx.fillRect(0, 0, 800, 600);
+    
+    return canvas;
+}</textarea>
+                            </div>
+                        </div>
+
+                        <!-- Web Content -->
+                        <div id="webInputs" class="content-inputs hidden">
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="type"></i>
+                                    <span>Title</span>
+                                </label>
+                                <input id="webTitle" type="text" placeholder="My Website" value="My Website" class="text-input">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="link"></i>
+                                    <span>URL</span>
+                                </label>
+                                <input id="webUrl" type="url" placeholder="https://example.com" class="text-input">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="upload"></i>
+                                    <span>Upload Image</span>
+                                </label>
+                                <div class="upload-area" id="uploadArea">
+                                    <i data-feather="upload-cloud"></i>
+                                    <p>Drop image here or click to upload</p>
+                                    <small>PNG, JPG, GIF, WebP, SVG - Auto-resizes mockup</small>
+                                    <input id="fileInput" type="file" accept="image/*" class="file-input" hidden>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Device Content -->
+                        <div id="deviceInputs" class="content-inputs hidden">
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="smartphone"></i>
+                                    <span>Device Type</span>
+                                </label>
+                                <select id="deviceType" class="select-input">
+                                    <option value="iphone">iPhone</option>
+                                    <option value="android">Android</option>
+                                    <option value="ipad">iPad</option>
+                                    <option value="tablet">Android Tablet</option>
+                                </select>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="circle"></i>
+                                    <span>Device Color</span>
+                                </label>
+                                <div class="device-colors">
+                                    <button class="device-color active" data-color="black" style="background: #1f2937;"></button>
+                                    <button class="device-color" data-color="white" style="background: #f9fafb;"></button>
+                                    <button class="device-color" data-color="gold" style="background: #fbbf24;"></button>
+                                    <button class="device-color" data-color="silver" style="background: #9ca3af;"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="maximize"></i>
+                                    <span>Frame Thickness</span>
+                                    <span class="value-display" id="thicknessValue">20px</span>
+                                </label>
+                                <input id="deviceThickness" type="range" min="10" max="40" value="20" class="range-input">
+                            </div>
+                            
+                            <div class="input-group">
+                                <label class="input-label">
+                                    <i data-feather="upload"></i>
+                                    <span>Screen Content</span>
+                                </label>
+                                <div class="upload-area" id="deviceUploadArea">
+                                    <i data-feather="upload-cloud"></i>
+                                    <p>Drop screen content here</p>
+                                    <small>PNG, JPG, GIF, WebP, SVG</small>
+                                    <input id="deviceFileInput" type="file" accept="image/*" class="file-input" hidden>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Canvas Area -->
+            <div class="canvas-area">
+                <div class="canvas-container" id="canvasContainer">
+                    <div class="mockup-stage" id="mockupStage">
+                        <!-- Code Mockup -->
+                        <div id="codeMockup" class="mockup-content">
+                            <div class="window-chrome">
+                                <div class="window-controls">
+                                    <div class="control-dot red"></div>
+                                    <div class="control-dot yellow"></div>
+                                    <div class="control-dot green"></div>
+                                    <div class="window-title" id="displayTitle">main.js</div>
+                                </div>
+                            </div>
+                            <div class="code-content">
+                                <div class="line-numbers" id="lineNumbers">1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10</div>
+                                <pre class="code-display"><code id="codeDisplay" class="language-javascript">// Welcome to Pixsemble
+function generateMockup() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Create beautiful mockups
+    ctx.fillStyle = '#6366f1';
+    ctx.fillRect(0, 0, 800, 600);
+    
+    return canvas;
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Web Mockup -->
+                        <div id="webMockup" class="mockup-content hidden">
+                            <div class="browser-chrome">
+                                <div class="browser-controls">
+                                    <div class="control-dot red"></div>
+                                    <div class="control-dot yellow"></div>
+                                    <div class="control-dot green"></div>
+                                </div>
+                                <div class="address-bar">
+                                    <div class="url-container">
+                                        <i data-feather="lock"></i>
+                                        <span id="displayUrl">https://example.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="web-content" id="webContent">
+                                <div class="placeholder-content">
+                                    <i data-feather="image"></i>
+                                    <p>Upload an image to see it here</p>
+                                    <small>The mockup will auto-resize to match your image dimensions</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Device Mockup -->
+                        <div id="deviceMockup" class="mockup-content hidden">
+                            <div class="device-frame iphone black" id="deviceFrame">
+                                <div class="device-screen">
+                                    <div class="device-content" id="deviceContent">
+                                        <div class="placeholder-content">
+                                            <i data-feather="smartphone"></i>
+                                            <p>Upload screen content</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="image-processor.js"></script>
+    <script src="export-manager.js"></script>
+    <script src="mockup-generator.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
